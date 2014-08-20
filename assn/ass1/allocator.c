@@ -37,10 +37,11 @@ static vsize_t memory_size;   // number of bytes malloc'd in memory[]
 
 void sal_init(u_int32_t size) {
    memory = malloc(size);
+   memory_size = size;
    free_list_ptr = 0;
    
    free_header_t *header = (void *) (memory);
-
+   
    header->magic = MAGIC_FREE;
    header->size = size;
    header->next = 0;
