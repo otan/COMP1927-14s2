@@ -1,4 +1,5 @@
 /*
+ * Oliver Tan
  *
  * finish the function createSequentialList(int n);
  * that takes in n and create a list from 1 to n inclusive
