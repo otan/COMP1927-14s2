@@ -1,0 +1,4 @@
+test.c: In function ‘main’:
+test.c:5:5: error: expected expression before ‘return’
+     return 0;
+     ^
