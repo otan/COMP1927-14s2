@@ -6,7 +6,7 @@ typedef struct GraphRep {
 
 Graph initGraph(int nV) {
     Graph g = malloc(sizeof(*g));
-    g->edges = calloc(sizeof(int), nV);
+    g->edges = calloc(sizeof(int*), nV);
 
     int i;
     for (i = 0; i < nV; i++) {
