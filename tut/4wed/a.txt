@@ -1,0 +1,4 @@
+nocompile.c: In function ‘main’:
+nocompile.c:5:5: error: expected ‘;’ before ‘return’
+     return 0;
+     ^
