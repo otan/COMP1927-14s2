@@ -130,5 +130,8 @@ int findPath(Graph g, Vertex src, Vertex dest, int max, int *path)
         path[i] = path[counter - i - 1];
         path[counter - i - 1] = temp;
     }
+
+    free(pre);
+    free(st);
     return counter;  // dummy ... always claims there is no path
 }
