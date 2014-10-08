@@ -1,0 +1,55 @@
+1) a) Complete the table for the WORST CASE run time your sorts are for each scenario.
+
+_____________     | sorted | reversed | random | 
+insertion         |
+selection         |
+bubble            |
+merge sort        |
+quick sort (naive)|
+quick sort (M.O.T)|
+quick sort (random)|
+
+note: 
+random = random pivot
+
+b) if the complexity is different within a sort (e.g. faster on sorted than reversed/random) for any of the above, explain why.
+
+
+2) 
+a) What is the time AND space complexity of the following program which adds numbers from 1 to n?
+
+int add(int n) {
+    int i;
+    int sum = 0;
+    for (i = 1; i <= n; i++) {
+        sum += i;
+    }
+    return sum;
+}
+
+b) I can make it faster by knowing that the sum from 1 to n is n(n+1)/2. What is the time and space complexity of below?
+
+int add(int n) {
+    return (n * (n + 1)) / 2;
+}
+
+3
+a) The following program prints a linked list in reverse order. What is the time and space complexity?
+
+void printReverse(Node first) {
+    Node prev = NULL, curr = first;
+    while (first != NULL) {
+        while (curr->next != NULL) {
+            prev = curr;
+            curr = curr->next;
+        }
+        if (prev == NULL) {
+            first = NULL;
+        } else {
+            prev->next = NULL;
+            printf("%d\n", curr->data);
+        }
+    }
+}
+
+b) How can I simplify this with a DOUBLY linked list? What is the time and space complexity?
