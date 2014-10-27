@@ -43,9 +43,6 @@ int max(int a[], int lo, int hi)
     if (hi == lo) {
         return a[lo];
     }
-    if (hi - lo <= 1) {
-        return MAX(a[lo], a[hi]);
-    }   
     int mid = lo + (hi - lo) / 2;
-    return MAX(max(a, lo, mid), max(a, mid, hi));
+    return MAX(max(a, lo, mid), max(a, mid + 1, hi));
 }
