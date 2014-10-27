@@ -113,12 +113,12 @@ void  removeE(Graph g, Edge e)
 	g->nE--;
 }
 
-void find(int *array, Graph g, int from) {
+void find(int *st, Graph g, int from) {
     int i = 0;
     for (i = 0; i < g->nV; i++) {
-        if (g->edges[from][i] && array[i] == -1) {
-            array[i] = from;
-            find(array, g, i);
+        if (g->edges[from][i] && st[i] == -1) {
+            st[i] = from;
+            find(st, g, i);
         }
     }
 }
@@ -126,19 +126,19 @@ void find(int *array, Graph g, int from) {
 // nComponents ... number of connected components
 int nComponents(Graph g)
 {
-    int *array = malloc(sizeof(Vertex) * g->nV);
+    int *st = malloc(sizeof(Vertex) * g->nV);
     int n = 0;
     int i = 0;
     for (i = 0; i < g->nV; i++) { 
-        array[i] = -1;
+        st[i] = -1;
     }
     for (i = 0; i < g->nV; i++) {
-        if (array[i] == -1) {
+        if (st[i] == -1) {
             n++;
-            array[i] = i;
-            find(array, g, i);
+            st[i] = i;
+            find(st, g, i);
         }
     }
-    free(array);
+    free(st);
     return n; 
 }
