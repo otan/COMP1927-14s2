@@ -1,0 +1,12 @@
+7. (8 marks)
+Here is a list of numbers:
+
+
+the hash function is
+h(x) = 
+
+(a) show the hash table using seperate chaining:
+
+(b) show the hash table using linear probing:
+
+(c) show the hash table using double hasing, with double hash d(x) = 

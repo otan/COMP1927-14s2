@@ -1,0 +1,25 @@
+#!/bin/sh
+
+d="$1"
+cat allocator_jake.c sal_stats.c > allocator.c
+make clean
+make run_sal
+echo ""
+if [ ! -x run_sal ]
+then
+	echo "Did not compile"
+	echo ""
+else
+	ulimit -t 10
+	for i in  1 2 3 4 5 7 8
+	do
+		case "$i" in
+		[1234]) size=512 ;;
+		[578]) size=4096 ;;
+		esac
+		echo "--- test$i ---"
+		./run_sal $size < test$i
+		echo ""
+	done
+fi
+echo ""

@@ -1,0 +1,5 @@
++ a 2020 ///// allocate half of the memory
++ b 2020 ///// this SHOULDN'T allocate (only 1 free slot)
+* b 255  ///// should fail, since alloc failed
+- b      ///// should fail, since alloc failed
+- a      ///// free and merge into single free region

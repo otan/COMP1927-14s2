@@ -1,0 +1,3 @@
++ z 200  ///// should allocate 256 byte region (half of memory)
+* z 1    ///// write to allocated region
+- z      ///// should free, with merge back into one region

@@ -1,0 +1,26 @@
+8. (17 marks)
+Type "display q8.png".
+
+
+(a) (6 marks)
+(i) show the adjacency matrix for the graph
+
+(ii) show the adjacency list for the graph
+
+(iii) assume the adjacency list has the following struct for vertices:
+struct adjListNode {
+    int to;
+    int weight;
+    struct adjListNode *next;
+};
+
+How much space does the two data structures occupy?
+
+(b) (11 marks)
+(i) perform dijsktras from node X to node Y, showing the st and wt array (3 marks)
+
+(ii) perform prim's of the graph, showing the st and wt array (3 marks)
+
+(iii) show a BFS from node X to node Y, showing the st and wt array (2 marks)
+
+(iv) show a DFS from node X to node Y, showing the st and wt array (2 marks)

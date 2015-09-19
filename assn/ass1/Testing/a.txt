@@ -1,0 +1,177 @@
+rm -f run_sal *.o
+gcc    -c -o run_sal.o run_sal.c
+gcc    -c -o allocator.o allocator.c
+gcc -lm  run_sal.o allocator.o   -o run_sal
+
+--- test1 ---
+sal_init(512) gives memory[] 512 bytes @ 0x11fb010
+Free: 512@0 
+>>> + z 200  ///// should allocate 256 byte region (half of memory)
+ptr[z] alloc'd mem[0]
+Free: 256@256 
+>>> * z 1    ///// write to allocated region
+mem[0] assigned 1
+Free: 256@256 
+>>> - z      ///// should free, with merge back into one region
+Deallocating mem[0]
+Free: 512@0 
+
+--- test2 ---
+sal_init(512) gives memory[] 512 bytes @ 0x1c40010
+Free: 512@0 
+>>> + a 40   ///// allocate 64 byte region (lots of splits)
+ptr[a] alloc'd mem[0]
+Free: 64@64 128@128 256@256 
+>>> + b 40   ///// allocate 64 byte region (no splits)
+ptr[b] alloc'd mem[64]
+Free: 128@128 256@256 
+>>> - a      ///// free 64 byte region
+Deallocating mem[0]
+Free: 64@0 128@128 256@256 
+>>> + c 100  ///// allocate 128 byte region (no splits)
+ptr[c] alloc'd mem[128]
+Free: 64@0 256@256 
+>>> - b      ///// should merge two 64 byte regions
+Deallocating mem[64]
+Free: 128@0 A128@128 256@256 
+>>> * c 15   ///// use memory chunk
+mem[128] assigned 15
+Free: 128@0 A128@128 256@256 
+>>> - c      ///// free only region (merge all into one)
+Deallocating mem[128]
+Free: 512@0 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 128@128 256@256 LOOP
+
+--- test3 ---
+sal_init(512) gives memory[] 512 bytes @ 0x257c010
+Free: 512@0 
+>>> + a 200  ///// allocate 200 bytes (256 byte region)
+ptr[a] alloc'd mem[0]
+Free: 256@256 
+>>> + b 100  ///// allocate 100 bytes (128 byte region)
+ptr[b] alloc'd mem[256]
+Free: 128@384 
+>>> + c 100  ///// enough space, but only one region, so should fail
+Free: 128@384 
+>>> - b
+Deallocating mem[256]
+Free: 256@256 
+>>> - a
+Deallocating mem[0]
+Free: 512@0 
+
+--- test4 ---
+sal_init(512) gives memory[] 512 bytes @ 0xda6010
+Free: 512@0 
+>>> + a 1   ///// allocate 32 byte region (many splits)
+Free: 512@0 
+>>> + b 1   ///// allocate 32 byte region (no splits)
+Free: 512@0 
+>>> - a     ///// free 32 byte region (no merge)
+Free: 512@0 
+>>> * a 1   ///// run_sal should pick this up if freed properly
+Free: 512@0 
+>>> - a     ///// run_sal should pick this up if freed properly
+Free: 512@0 
+>>> + c 1   ///// allocate 32 byte region (few splits)
+Free: 512@0 
+>>> + d 1   ///// allocate 32 byte region (no splits)
+Free: 512@0 
+>>> + e 0   ///// should fail
+Free: 512@0 
+
+--- test5 ---
+sal_init(4096) gives memory[] 4096 bytes @ 0x18ae010
+Free: 4096@0 
+>>> + c 240    ///// allocate 256 byte region (many splits)
+ptr[c] alloc'd mem[0]
+Free: 256@256 512@512 1024@1024 2048@2048 
+>>> + d 496    ///// allocate 512 byte region (few splits)
+ptr[d] alloc'd mem[512]
+Free: 256@256 1024@1024 2048@2048 
+>>> + e 2032   ///// allocate 2048 byte region  (no splits)
+ptr[e] alloc'd mem[2048]
+Free: 256@256 1024@1024 
+>>> - e        ///// free 2048 byte region (no merges)
+Deallocating mem[2048]
+Free: 256@256 1024@1024 2048@2048 
+>>> - d        ///// free 512 byte region (merge?)
+Deallocating mem[512]
+Free: 256@256 512@512 1024@1024 2048@2048 
+>>> - c        ///// free 256 byte region (all merge to single region)
+Deallocating mem[0]
+Free: 4096@0 
+
+--- test6 ---
+sal_init(4096) gives memory[] 4096 bytes @ 0x1edc010
+Free: 4096@0 
+>>> + a 13   ///// allocates 13 bytes in 32 byte region
+Free: 4096@0 
+>>> + b 153  ///// allocates 153 bytes in 256 byte region
+ptr[b] alloc'd mem[0]
+Free: 256@256 512@512 1024@1024 2048@2048 
+>>> + c 132  ///// allocates 132 bytes in 256 byte region
+ptr[c] alloc'd mem[256]
+Free: 512@512 1024@1024 2048@2048 
+>>> + d 632  ///// allocates 632 bytes in 1024 byte region
+ptr[d] alloc'd mem[1024]
+Free: 512@512 2048@2048 
+>>> + e 16   ///// allocates 16 bytes in 32 byte region
+Free: 512@512 2048@2048 
+>>> + f 110  ///// allocates 110 bytes in 128 byte region
+ptr[f] alloc'd mem[512]
+Free: 128@640 256@768 2048@2048 
+>>> + g 1000 ///// allocates 1000 bytes in 1024 byte region
+ptr[g] alloc'd mem[2048]
+Free: 128@640 256@768 1024@3072 
+>>> + h 251  ///// allocates 251 bytes in 512 byte region
+ptr[h] alloc'd mem[768]
+Free: 128@640 1024@3072 
+>>> + i 48   ///// allocates 48 bytes in 64 byte region
+ptr[i] alloc'd mem[640]
+Free: 64@704 1024@3072 
+>>> + j 89   ///// allocates 89 bytes in 128 byte region
+ptr[j] alloc'd mem[3072]
+Free: 64@704 128@3200 256@3328 512@3584 
+>>> + k 32   ///// allocates 32 bytes in 64 byte region
+ptr[k] alloc'd mem[704]
+Free: 32@736 128@3200 256@3328 512@3584 
+>>> + l 100  ///// allocates 100 bytes in 128 byte region
+ptr[l] alloc'd mem[3200]
+Free: 32@736 256@3328 512@3584 
+>>> + m 200  ///// allocates 200 bytes in 256 byte region
+ptr[m] alloc'd mem[3328]
+Free: 32@736 512@3584 
+>>> + n 100  ///// allocates 100 bytes in 128 byte region
+ptr[n] alloc'd mem[3584]
+Free: 32@736 128@3712 256@3840 
+>>> + o 10   ///// allocates 10 bytes in 32 byte region
+Free: 32@736 128@3712 256@3840 
+>>> + p 10   ///// this should fail (no free space)
+Free: 32@736 128@3712 256@3840 
+>>> - d      ///// free 1024 byte region
+Deallocating mem[1024]
+Free: 32@736 1024@1024 A1024@2048 A128@3072 A128@3200 A256@3328 A128@3584 128@3712 256@3840 
+>>> - a      ///// free 32 byte region
+Free: 32@736 1024@1024 A1024@2048 A128@3072 A128@3200 A256@3328 A128@3584 128@3712 256@3840 
+>>> - b      ///// free 256 byte region
+Deallocating mem[0]
+Free: 256@0 32@736 1024@1024 A1024@2048 A128@3072 A128@3200 A256@3328 A128@3584 128@3712 256@3840 
+>>> - c      ///// free 256 byte region
+Deallocating mem[256]
+Free: 512@0 A128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 A128@3072 A128@3200 A256@3328 A128@3584 128@3712 256@3840 
+>>> - f      ///// free 128 byte region
+Deallocating mem[512]
+Free: 512@0 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 LOOP
+>>> - e      ///// free 32 byte region
+Free: 512@0 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 A1024@2048 LOOP
+>>> - g      ///// free 1024 byte region
+Deallocating mem[2048]
+Free: 512@0 128@512 A64@640 A32@704 32@736 1024@1024 1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 1024@2048 128@512 A64@640 A32@704 32@736 1024@1024 1024@2048 LOOP
+>>> - i      ///// free 64 byte region
+Deallocating mem[640]
+Free: 512@0 128@512 64@640 A32@704 32@736 1024@1024 1024@2048 128@512 64@640 A32@704 32@736 1024@1024 1024@2048 128@512 64@640 A32@704 32@736 1024@1024 1024@2048 128@512 64@640 A32@704 32@736 1024@1024 1024@2048 128@512 64@640 A32@704 32@736 1024@1024 1024@2048 LOOP
+>>> - h      ///// free 512 byte region
+Deallocating mem[768]
+Free: 512@0 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 128@512 256@768 1024@2048 LOOP
+>>> - n      ///// free 128 byte region
+Deallocating mem[3584]

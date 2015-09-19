@@ -1,0 +1,5 @@
++ a 200  ///// allocate 200 bytes (256 byte region)
++ b 100  ///// allocate 100 bytes (128 byte region)
++ c 100  ///// enough space, but only one region, so should fail
+- b
+- a

@@ -1,0 +1,5 @@
+4. (2 marks)
+
+(a) What does 'printf("%d\n", 12 & 3);' output? (1 mark)
+
+(b) What does 'printf("%d\n", 8 | 11);' output? (1 mark)

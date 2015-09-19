@@ -1,0 +1,8 @@
++ a 1   ///// allocate 32 byte region (many splits)
++ b 1   ///// allocate 32 byte region (no splits)
+- a     ///// free 32 byte region (no merge)
+* a 1   ///// run_sal should pick this up if freed properly
+- a     ///// run_sal should pick this up if freed properly
++ c 1   ///// allocate 32 byte region (few splits)
++ d 1   ///// allocate 32 byte region (no splits)
++ e 0   ///// should fail

@@ -1,0 +1,7 @@
++ a 40   ///// allocate 64 byte region (lots of splits)
++ b 40   ///// allocate 64 byte region (no splits)
+- a      ///// free 64 byte region
++ c 100  ///// allocate 128 byte region (no splits)
+- b      ///// should merge two 64 byte regions
+* c 15   ///// use memory chunk
+- c      ///// free only region (merge all into one)

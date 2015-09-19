@@ -1,0 +1,10 @@
+6. (8 marks)
+
+Using the following array of numbers:
+
+(a) use merge sort, showing each step (3 marks)
+
+(b) use quick sort with end element as pivot, showing each step (3 marks)
+
+(c) When would quick sort with the right element as pivot be slowest? Why? (2 marks)
+

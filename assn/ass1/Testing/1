@@ -1,0 +1,48 @@
+Failed to allocate 100 bytes for ptr[c]
+Failed to allocate 100 bytes for ptr[c]
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[a]
+sal_malloc: Too little memory requested
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[a]
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[b]
+Failed to allocate 1 bytes for ptr[b]
+Attempt to free null pointer
+Attempt to free null pointer
+Attempt to write via unallocated pointer
+Attempt to write via unallocated pointer
+Attempt to free null pointer
+Attempt to free null pointer
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[c]
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[c]
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[d]
+sal_malloc: Too little memory requested
+Failed to allocate 1 bytes for ptr[d]
+sal_malloc: Too little memory requested
+Failed to allocate 0 bytes for ptr[e]
+sal_malloc: Too little memory requested
+Failed to allocate 0 bytes for ptr[e]
+sal_malloc: Too little memory requested
+Failed to allocate 13 bytes for ptr[a]
+sal_malloc: Too little memory requested
+Failed to allocate 13 bytes for ptr[a]
+sal_malloc: Too little memory requested
+Failed to allocate 16 bytes for ptr[e]
+sal_malloc: Too little memory requested
+Failed to allocate 16 bytes for ptr[e]
+sal_malloc: Too little memory requested
+Failed to allocate 10 bytes for ptr[o]
+sal_malloc: Too little memory requested
+Failed to allocate 10 bytes for ptr[o]
+sal_malloc: Too little memory requested
+Failed to allocate 10 bytes for ptr[p]
+sal_malloc: Too little memory requested
+Failed to allocate 10 bytes for ptr[p]
+Attempt to free null pointer
+Attempt to free null pointer
+Attempt to free null pointer
+Attempt to free null pointer

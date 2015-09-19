@@ -1,0 +1,12 @@
+5. (10 marks)
+
+Using the following list of numbers:
+
+
+(a) insert into a binary search tree in the order they appear (2 marks)
+
+(b) insert into a splay tree in the order they appear (3 marks)
+
+(c) insert into a 2-3-4 tree in the order they appear (3 marks)
+
+(d) using the 2-3-4 tree, show a representation using a red-black tree. (2 marks)

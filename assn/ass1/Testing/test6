@@ -1,0 +1,32 @@
++ a 13   ///// allocates 13 bytes in 32 byte region
++ b 153  ///// allocates 153 bytes in 256 byte region
++ c 132  ///// allocates 132 bytes in 256 byte region
++ d 632  ///// allocates 632 bytes in 1024 byte region
++ e 16   ///// allocates 16 bytes in 32 byte region
++ f 110  ///// allocates 110 bytes in 128 byte region
++ g 1000 ///// allocates 1000 bytes in 1024 byte region
++ h 251  ///// allocates 251 bytes in 512 byte region
++ i 48   ///// allocates 48 bytes in 64 byte region
++ j 89   ///// allocates 89 bytes in 128 byte region
++ k 32   ///// allocates 32 bytes in 64 byte region
++ l 100  ///// allocates 100 bytes in 128 byte region
++ m 200  ///// allocates 200 bytes in 256 byte region
++ n 100  ///// allocates 100 bytes in 128 byte region
++ o 10   ///// allocates 10 bytes in 32 byte region
++ p 10   ///// this should fail (no free space)
+- d      ///// free 1024 byte region
+- a      ///// free 32 byte region
+- b      ///// free 256 byte region
+- c      ///// free 256 byte region
+- f      ///// free 128 byte region
+- e      ///// free 32 byte region
+- g      ///// free 1024 byte region
+- i      ///// free 64 byte region
+- h      ///// free 512 byte region
+- n      ///// free 128 byte region
+- o      ///// free 10 byte region
+- l      ///// free 128 byte region
+- m      ///// free 256 byte region
+- j      ///// free 128 byte region
+- k      ///// free 64 byte region
+- p      ///// this should fail (not allocated above)

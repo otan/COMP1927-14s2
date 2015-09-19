@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for d in `grep -v '^#' subs`
+do
+	echo $d
+	time sh run1 "$d" > ../$d/testing.out  2>&1
+done

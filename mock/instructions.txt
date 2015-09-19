@@ -1,0 +1,16 @@
+The exam is split in two parts:
+
+q1-q3: practical component (45 marks)
+open folders (using cd) for q1, q2, q3
+each question is worth 15 marks
+
+q4-q8: theory component (45 marks)
+open qX.txt for the question, and answer there
+q4: 2 marks
+q5: 10 marks
+q6: 8 marks
+q7: 8 marks
+q8: 17 marks
+
+The exam is probably a little longer than the real exam ;)
+Good luck!

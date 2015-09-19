@@ -1,0 +1,12 @@
++ a 10   ///// allocate 10 bytes in 32 byte region
++ b 100  ///// allocate 100 bytes in 128 byte region
++ c 132  ///// allocate 132 bytes in 256 byte region
+- b      ///// free 128 byte region
++ d 800  ///// allocate 800 bytes in 1024 byte region
+- a      ///// free 32 byte region
++ e 16   ///// allocate 16 bytes in 32 byte region
+- d      ///// free 1024 byte region
+- e      ///// free 32 byte region
++ f 110  ///// allocate 110 bytes in 128 byte region
++ g 1000 ///// allocate 1000 bytes in 1024 byte region
+- c      ///// free 256 byte region

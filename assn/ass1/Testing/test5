@@ -1,0 +1,6 @@
++ c 240    ///// allocate 256 byte region (many splits)
++ d 496    ///// allocate 512 byte region (few splits)
++ e 2032   ///// allocate 2048 byte region  (no splits)
+- e        ///// free 2048 byte region (no merges)
+- d        ///// free 512 byte region (merge?)
+- c        ///// free 256 byte region (all merge to single region)
